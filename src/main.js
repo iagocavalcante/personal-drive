@@ -1,7 +1,11 @@
 import templateComponent from './template'
+import uploaderComponent from './domains/uploader'
+import authComponent from './domains/auth'
 
 const components = [
-  templateComponent
+    authComponent,
+    templateComponent,
+    uploaderComponent,
 ]
 
 class Init {
