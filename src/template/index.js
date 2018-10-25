@@ -1,4 +1,8 @@
+import sharer from './../domains/share/sharer';
+import './../domains/share/sharedList';
+
 require('./../assets/css/style.scss');
+require('./../domains/usage');
 require('font-awesome/css/font-awesome.css')
 
 const header = require('./header/header.html');
@@ -36,9 +40,9 @@ export default {
 
       openMenu.addEventListener('click', openMenuEvent);
 
-      // document.getElementById('addSharer').addEventListener('submit', function (e) {
-      //     e.preventDefault();
-      //     sharer(document.getElementById('addSharerInput').value)
-      // })
+      document.getElementById('addSharer').addEventListener('submit', function (e) {
+        e.preventDefault();
+        sharer(document.getElementById('addSharerInput').value)
+      })
     }
 }
