@@ -14,8 +14,6 @@ export default {
       queryString[item[0]] = item[1]
     })
 
-    console.log(queryString)
-
     let uid = ''
     let title = ''
 

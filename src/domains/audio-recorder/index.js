@@ -28,7 +28,7 @@ export default function () {
   if (streamAudio) {
     streamAudio.getTracks()[0].stop()
     recorder.stop()
-    console.log('parando audio')
+    ('parando audio')
   } else {
     let config = {
       video: false,
@@ -38,7 +38,6 @@ export default function () {
     let success = function (stream) {
       streamAudio = stream
       audioRecorder()
-      console.log('reproduzindo audio')
     }
 
     navigator.getUserMedia(config, success, (err) => console.log(err))

@@ -8,7 +8,7 @@ export const authCreateEmail = function () {
 
   app.auth().createUserWithEmailAndPassword(email, password)
     .then(function (data) {
-      console.log(data)
+      (data)
     })
     .catch(function (err) {
       console.log(err)
