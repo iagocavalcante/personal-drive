@@ -37,6 +37,6 @@
     "webpack-cli": "3.3.2",
     "webpack-dev-server": "3.5.0",
     "webpack-merge": "4.2.1",
-    "workbox-webpack-plugin": "3.6.3"
+    "workbox-webpack-plugin": "4.3.1"
   }
 }
