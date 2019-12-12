@@ -23,7 +23,7 @@
     "babel-loader": "8.0.6",
     "babel-preset-es2015": "6.24.1",
     "compression-webpack-plugin": "3.0.1",
-    "copy-webpack-plugin": "5.1.0",
+    "copy-webpack-plugin": "5.1.1",
     "css-loader": "3.3.0",
     "dotenv-webpack": "1.7.0",
     "file-loader": "5.0.2",
