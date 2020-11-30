@@ -54,6 +54,8 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [{ from: "static" }],
     }),
-    new Dotenv(),
+    new Dotenv({
+      systemvars: process.env.NODE_ENV == "development" ? false : true,
+    }),
   ],
 };
