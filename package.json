@@ -14,7 +14,7 @@
   "author": "Iago Cavalcante <iagoangelimc@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "firebase": "7.15.5",
+    "firebase": "7.17.1",
     "font-awesome": "4.7.0",
     "js-sha1": "0.6.0"
   },
@@ -24,8 +24,8 @@
     "babel-loader": "8.1.0",
     "compression-webpack-plugin": "4.0.0",
     "copy-webpack-plugin": "6.0.3",
-    "css-loader": "3.6.0",
-    "dotenv-webpack": "1.8.0",
+    "css-loader": "4.1.1",
+    "dotenv-webpack": "2.0.0",
     "file-loader": "6.0.0",
     "html-loader": "1.1.0",
     "html-webpack-plugin": "4.3.0",
@@ -33,10 +33,10 @@
     "rimraf": "3.0.2",
     "sass-loader": "9.0.2",
     "style-loader": "1.2.1",
-    "webpack": "4.43.0",
+    "webpack": "4.44.1",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.0",
-    "webpack-merge": "5.0.8",
+    "webpack-merge": "5.1.0",
     "workbox-webpack-plugin": "5.1.3"
   }
 }
