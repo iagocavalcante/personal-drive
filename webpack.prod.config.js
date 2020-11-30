@@ -20,6 +20,9 @@ module.exports = merge(webpackBase, {
       'process.env': {
         'NODE_ENV': "'production'"
       }
-    })
+    }),
+    new Dotenv({
+      systemvars: true,
+    }),
   ]
 })
