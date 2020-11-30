@@ -10,3 +10,9 @@ e baseada no curso da School of Net
 * Webpack
 * Babel
 * Javascript
+* SASS
+
+
+### Deploy
+
+* Netlify
