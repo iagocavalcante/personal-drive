@@ -1,4 +1,4 @@
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const webpackBase = require('./webpack.config')
 const CompressionWebPackPlugin = require('compression-webpack-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin')
