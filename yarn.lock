@@ -6653,10 +6653,10 @@ webpack-log@^2.0.0:
     ansi-colors "^3.0.0"
     uuid "^3.3.2"
 
-webpack-merge@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-5.1.0.tgz#5a24b2d5fa0431db96862116a7b7f18c4cd7bbd4"
-  integrity sha512-NNEXYSV/ixLwICcAhlVQ8c8E8dHmOcVnubfhoFdL6Tpbq6N9ZUvotQBYPwTsyXepXmCm34KjXgdC4PCQwJBp/w==
+webpack-merge@5.8.0:
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-5.8.0.tgz#2b39dbf22af87776ad744c390223731d30a68f61"
+  integrity sha512-/SaI7xY0831XwP6kzuwhKWVKDP9t1QY1h65lAFLbZqMPIuYcD9QAW4u9STIbU9kaJbPBB/geU/gLr1wDjOhQ+Q==
   dependencies:
     clone-deep "^4.0.1"
     wildcard "^2.0.0"
