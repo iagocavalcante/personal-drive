@@ -14,7 +14,7 @@
   "dependencies": {
     "firebase": "^11.0.0",
     "font-awesome": "^4.7.0",
-    "js-sha1": "^0.6.0"
+    "js-sha1": "^0.7.0"
   },
   "devDependencies": {
     "vite": "^6.0.0"
