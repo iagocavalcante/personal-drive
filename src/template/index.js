@@ -14,35 +14,36 @@ export default {
     el: '#app',
     template: `
     <div id="wrapper">
-        ${header}${content}${footer}
-    </div>
-    ${sidebar}`,
+        ${header}
+        <div class="main-wrapper">
+            ${sidebar}
+            <div class="content-wrapper">
+                ${content}
+                ${footer}
+            </div>
+        </div>
+    </div>`,
     afterBind: () => {
-      const openMenu = document.querySelector('#header .menu-icon');
-      const closeMenu = document.getElementById('wrapper');
-
-      const closeMenuEvent = function(e) {
+      const menuBtn = document.getElementById('menuBtn');
+      const sidebar = document.getElementById('sidebar');
+      
+      if (menuBtn) {
+        menuBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          const body = document.querySelector('body');
-          body.className = body.className.replace('show-menu', '');
+          sidebar.classList.toggle('collapsed');
+        });
+      }
 
-          closeMenu.removeEventListener('click', closeMenuEvent, true);
-      };
-
-      const openMenuEvent = function (e) {
+      const addSharerForm = document.getElementById('addSharer');
+      if (addSharerForm) {
+        addSharerForm.addEventListener('submit', function (e) {
           e.preventDefault();
-          const body = document.querySelector('body');
-          body.className += " show-menu";
-          body.className = body.className.trim();
-
-          closeMenu.addEventListener('click', closeMenuEvent, true);
-      };
-
-      openMenu.addEventListener('click', openMenuEvent);
-
-      document.getElementById('addSharer').addEventListener('submit', function (e) {
-        e.preventDefault();
-        sharer(document.getElementById('addSharerInput').value)
-      })
+          const input = document.getElementById('addSharerInput');
+          if (input && input.value) {
+            sharer(input.value);
+            input.value = '';
+          }
+        });
+      }
     }
 }

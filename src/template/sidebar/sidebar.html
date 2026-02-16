@@ -1,23 +1,48 @@
 <div id="sidebar">
-  <h3>Detalhes da conta</h3>
-  <p>Total de espaço: 1GB</p>
-
-  <div class="progress">
-      <div class="bar usage">60% usado</div>
-      <div class="bar color free">40% livre</div>
+  <div class="sidebar-header">
+    <div class="user-avatar">
+      <i class="fa fa-user"></i>
+    </div>
+    <div class="user-info">
+      <span class="user-name" id="userName">User</span>
+      <span class="user-email" id="userEmail">user@email.com</span>
+    </div>
   </div>
 
-  <form id="addSharer" action="">
-      <legend>Compartilhar drive</legend>
-      <input id="addSharerInput" type="email" placeholder="Email..."><input type="submit" value=">" class="btn">
-  </form>
+  <div class="storage-info">
+    <div class="storage-label">
+      <span>Storage</span>
+      <span class="storage-used">60% used</span>
+    </div>
+    <div class="storage-bar">
+      <div class="storage-fill" style="width: 60%"></div>
+    </div>
+    <small class="storage-detail">600MB of 1GB</small>
+  </div>
 
-  <p>Compartilhados</p>
+  <div class="share-section">
+    <h4>Share Drive</h4>
+    <form id="addSharer" class="share-form">
+      <input id="addSharerInput" type="email" placeholder="Enter email...">
+      <button type="submit" class="btn-share">
+        <i class="fa fa-plus"></i>
+      </button>
+    </form>
+  </div>
 
-  <ul id="shared-list">
-      <li>Nenhum</li>
-  </ul>
+  <div class="shared-section">
+    <h4>Shared With</h4>
+    <ul id="shared-list">
+      <li class="empty">No one yet</li>
+    </ul>
+  </div>
 
-  <a href="" class="btn">Editar informações</a>
-  <a href="" class="btn red">Sair</a>
+  <div class="sidebar-actions">
+    <button class="btn-edit">
+      <i class="fa fa-pencil"></i> Edit Profile
+    </button>
+    <button class="btn-logout" id="logoutBtnSidebar">
+      <i class="fa fa-sign-out"></i> Logout
+    </button>
+  </div>
 </div>

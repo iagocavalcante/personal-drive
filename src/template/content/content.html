@@ -1,7 +1,25 @@
 <main id="main">
-  <section class="files">
+  <div class="content-header">
+    <div class="breadcrumb">
+      <span id="path">My Files</span>
+    </div>
+    <div class="content-actions">
+      <button class="btn-sort">
+        <i class="fa fa-sort"></i>
+      </button>
+      <button class="btn-grid" id="gridViewBtn">
+        <i class="fa fa-th"></i>
+      </button>
+      <button class="btn-list" id="listViewBtn">
+        <i class="fa fa-list"></i>
+      </button>
+    </div>
+  </div>
 
-      Carregando
-
+  <section class="files" id="filesContainer">
+    <div class="loader">
+      <div class="spinner"></div>
+      <span>Loading files...</span>
+    </div>
   </section>
 </main>
