@@ -1,18 +1,31 @@
-# personal-drive
+# Personal Drive
 
-Essa é uma aplicação Single Page Application(SPA) feita com firebase e javascript sendo um Dropbox-like. Foi feita pra estudar as ideias por trás dos frameworks
-e baseada no curso da School of Net
+Personal file storage with Firebase.
 
+## Setup
 
-### Tecnologias usadas 
+1. Install dependencies:
+```bash
+npm install
+```
 
-* Firebase
-* Webpack
-* Babel
-* Javascript
-* SASS
+2. Copy `.env.example` to `.env` and fill in your Firebase config:
+```bash
+cp .env.example .env
+```
 
+3. Run development server:
+```bash
+npm run dev
+```
 
-### Deploy
+4. Build for production:
+```bash
+npm run build
+```
 
-* Netlify
+## Tech Stack
+
+- Firebase v11 (Auth, Realtime Database, Storage)
+- Vite
+- Font Awesome

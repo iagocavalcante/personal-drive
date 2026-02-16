@@ -1,8 +1,8 @@
-import { app } from './../../configuration/firebase'
+import { database } from './../../configuration/firebase'
 
-app.auth().onAuthStateChanged(function (user) {
+auth.onAuthStateChanged(function (user) {
   if (user) {
-    let ref = app.database().ref('/shared/' + user.uid)
+    let ref = database.ref('/shared/' + user.uid)
 
     ref.on('value', (snapshot) => {
       let sharedList = snapshot.val()

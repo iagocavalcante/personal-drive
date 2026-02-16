@@ -1,4 +1,4 @@
-import { app } from './../../configuration/firebase'
+import { database } from './../../configuration/firebase'
 
 export const authCreateEmail = function () {
   alert('Criação de conta')
@@ -6,7 +6,7 @@ export const authCreateEmail = function () {
   let email = prompt('Qual seu email', '')
   let password = prompt('Qual sua senha', '')
 
-  app.auth().createUserWithEmailAndPassword(email, password)
+  auth.createUserWithEmailAndPassword(email, password)
     .then(function (data) {
       (data)
     })
@@ -21,7 +21,7 @@ export const authEmail = function () {
   let email = prompt('Qua seu email:', '')
   let password = prompt('Qua sua senha:', '')
 
-  app.auth().signInWithEmailAndPassword(email, password)
+  auth.signInWithEmailAndPassword(email, password)
     .then(function (data) {
       console.log(data)
     })

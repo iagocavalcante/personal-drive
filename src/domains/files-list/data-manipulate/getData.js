@@ -1,4 +1,4 @@
-import { app } from './../../../configuration/firebase'
+import { database } from './../../../configuration/firebase'
 import getData from './updateData'
 
 export const foldersPath = []
@@ -19,7 +19,6 @@ export default function (ref) {
     breadcrumbs += ` / <a href="" data-type="folder-open" data-fid="${foldersPath[index].id}" data-title="${foldersPath[index].title}">${foldersPath[index].title}</a>`
   }
 
-  const database = app.database()
   const filesRef = database.ref(firebase_ref)
   filesRef.on('value', getData)
 

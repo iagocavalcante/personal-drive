@@ -1,4 +1,4 @@
-import { app } from './../../configuration/firebase'
+import { database } from './../../configuration/firebase'
 import { authCreateEmail, authEmail } from './../create-account'
 import { UserClass } from './user/user'
 import fileListComponent from './../../domains/files-list/'
@@ -13,7 +13,7 @@ export default {
   el: null,
   template: null,
   afterBind () {
-    app.auth().onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function (user) {
       if (user) {
         const userInstance = new UserClass
         userInstance.user = user
@@ -27,7 +27,7 @@ export default {
 
         const sha1 = require('js-sha1')
 
-        let ref = app.database().ref('/sharer/' + sha1(user.email))
+        let ref = database.ref('/sharer/' + sha1(user.email))
         ref.set(user.uid)
       } else {
         const auth = document.getElementById('auth')

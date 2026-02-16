@@ -1,8 +1,8 @@
-import { app } from './../../configuration/firebase'
+import { app, database, auth, storage } from './../../configuration/firebase'
 
-app.auth().onAuthStateChanged(function (user) {
+auth.onAuthStateChanged(function (user) {
   if (user) {
-    const database = app.database()
+    const database = database
     let ref = database.ref('/users/' + user.uid + '/usage')
     ref.on('value', (snapshot) => {
       let totalUsage = snapshot.val() * 100 / 1073741824

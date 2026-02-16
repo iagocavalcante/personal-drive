@@ -1,5 +1,5 @@
 import getPath from './../uploader/utils/path'
-import { app } from './../../configuration/firebase'
+import { database } from './../../configuration/firebase'
 import { UserClass } from './../auth/user/user'
 
 export default function () {
@@ -12,7 +12,7 @@ export default function () {
 
   const userInstance = new UserClass
 
-  const folderRef = app.database().ref('files/' + userInstance.user.uid + path)
+  const folderRef = database.ref('files/' + userInstance.user.uid + path)
   folderRef.push({
     type: 'folder-open',
     title:  dirName
