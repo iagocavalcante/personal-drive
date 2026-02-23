@@ -32,7 +32,7 @@ RUN mix phx.digest && \
     MIX_ENV=prod mix release
 
 # Final runtime image
-FROM alpine:3.19
+FROM alpine:3.23
 
 # Install runtime dependencies
 RUN apk add --no-cache \
