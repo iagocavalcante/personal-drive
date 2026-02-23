@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+deps/
+_build/
+
+# Development
+*.db
+*.db-*
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+priv/static/
+assets/node_modules/
+
+# Logs
+*.log
+logs/
+
+# Test
+cover/
+
+# Backup
+*.bak
+*.backup
