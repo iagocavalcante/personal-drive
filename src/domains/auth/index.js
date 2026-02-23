@@ -1,6 +1,5 @@
 import api from './../../lib/api'
 import fileListComponent from './../../domains/files-list/'
-import { UserClass } from './user/user'
 
 let template = document.createElement('template')
 template.innerHTML = require('./template/index.html')
