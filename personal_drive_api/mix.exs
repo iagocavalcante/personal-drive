@@ -56,7 +56,11 @@ defmodule PersonalDriveApi.MixProject do
       {:ex_aws, "~> 2.5"},
       {:ex_aws_s3, "~> 2.4"},
       {:req, "~> 0.5"},
-      {:hackney, "~> 1.18"}
+      {:hackney, "~> 1.18"},
+      
+      # Authentication - Magic Link
+      {:pow, "~> 1.0"},
+      {:pow_assent, "~> 0.4"}
     ]
   end
 

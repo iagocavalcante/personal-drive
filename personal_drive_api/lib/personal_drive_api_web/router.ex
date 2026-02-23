@@ -1,5 +1,6 @@
 defmodule PersonalDriveApiWeb.Router do
   use PersonalDriveApiWeb, :router
+  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,6 +15,16 @@ defmodule PersonalDriveApiWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :pow_require do
+    plug Pow.Plug.Session
+  end
+
+  scope "/" do
+    pipe_through :browser
+
+    pow_routes()
+  end
+
   scope "/", PersonalDriveApiWeb do
     pipe_through :browser
 
@@ -22,7 +33,7 @@ defmodule PersonalDriveApiWeb.Router do
 
   # Other scopes may use custom stacks.
   scope "/api/v1", PersonalDriveApiWeb do
-    pipe_through :api
+    pipe_through [:api, :pow_require]
 
     # Files
     get "/files", FileController, :index
@@ -33,6 +44,14 @@ defmodule PersonalDriveApiWeb.Router do
     post "/files/confirm", FileController, :confirm_upload
     get "/files/:id/download", FileController, :download_url
     delete "/files/:id", FileController, :delete
+  end
+
+  # Public API (registration, magic link)
+  scope "/api/v1", PersonalDriveApiWeb do
+    pipe_through :api
+
+    post "/auth/register", FileController, :index  # Placeholder
+    post "/auth/magic-link", FileController, :index  # Placeholder
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
