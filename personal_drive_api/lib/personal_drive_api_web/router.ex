@@ -59,6 +59,7 @@ defmodule PersonalDriveApiWeb.Router do
   scope "/api/v1", PersonalDriveApiWeb do
     pipe_through :api
 
+    get "/health", HealthController, :show
     post "/auth/register", AuthController, :register
     post "/auth/login", AuthController, :login
     post "/auth/logout", AuthController, :logout

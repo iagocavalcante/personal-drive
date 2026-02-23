@@ -1,0 +1,63 @@
+# Personal Drive API - Phoenix Framework
+FROM elixir:1.16-alpine AS builder
+
+# Install build dependencies
+RUN apk add --no-cache \
+    build-base \
+    git \
+    nodejs \
+    npm
+
+# Prepare Phoenix deps
+WORKDIR /app
+
+# Install Hex and Rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force
+
+# Copy deps first for better caching
+COPY personal_drive_api/mix.exs personal_drive_api/mix.lock ./
+RUN mix deps.get --only_prod
+
+# Copy and build assets
+COPY personal_drive_api/assets ./
+RUN npm install && npm run deploy
+
+# Copy source and compile
+COPY personal_drive_api/lib ./lib
+COPY personal_drive_api/config ./config
+COPY personal_drive_api/priv ./priv
+
+RUN mix phx.digest && \
+    MIX_ENV=prod mix release
+
+# Final runtime image
+FROM alpine:3.19
+
+# Install runtime dependencies
+RUN apk add --no-cache \
+    openssl \
+    ncurses
+
+WORKDIR /app
+
+# Copy release from builder
+COPY --from=builder /app/_build/prod/rel/personal_drive_api ./
+
+# Create non-root user
+RUN adduser -D -u 1000 app
+
+# Set ownership
+RUN chown -R app:app /app
+
+USER app
+
+# Environment variables
+ENV MIX_ENV=prod
+ENV PORT=4000
+
+# Expose port
+EXPOSE 4000
+
+# Start command
+CMD ["bin/personal_drive_api", "start"]
