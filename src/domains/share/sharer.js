@@ -1,20 +1,22 @@
-import { database } from './../../configuration/firebase'
-import { UserClass } from './../auth/user/user'
+import api from './../../lib/api'
 
-export default function (value) {
-  const sha1 = require('js-sha1')
-
-  let ref = database.ref('/sharer/' + sha1(value))
-  ref.once('value', (snapshot) => {
-    if (snapshot.val()) {
-      const userInstante = new UserClass()
-      let ref2 = database.ref('/shared/' + snapshot.val() + '/' + userInstante.user.uid)
-      ref2.set({
-          uid: userInstante.user.uid,
-          email: userInstante.user.email
-      })
+export default async function (fileId) {
+  const email = prompt('Enter email address to share with:')
+  
+  if (!email) {
+    return
+  }
+  
+  try {
+    const result = await api.shareFile(fileId, email)
+    
+    if (result.success) {
+      alert('File shared successfully!')
     } else {
-      alert('Email não cadastrado')
+      alert(result.error || 'Failed to share file')
     }
-  })
+  } catch (error) {
+    console.error('Share failed:', error)
+    alert('Failed to share file: ' + error.message)
+  }
 }

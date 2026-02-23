@@ -1,18 +1,20 @@
-import { app, database, auth, storage } from './../../configuration/firebase'
+import api from './../../lib/api'
 
-auth.onAuthStateChanged(function (user) {
-  if (user) {
-    const database = database
-    let ref = database.ref('/users/' + user.uid + '/usage')
-    ref.on('value', (snapshot) => {
-      let totalUsage = snapshot.val() * 100 / 1073741824
-      totalUsage = Math.round(totalUsage)
-      let totalFree = 100 - totalUsage
-
-      document.querySelector('.progress .usage').innerHTML = totalUsage + '% usado'
-      document.querySelector('.progress .free').innerHTML = totalFree + '% livre'
-
-      document.querySelector('.progress').setAttribute('style', 'grid-template-columns: ' + totalUsage + '% ' + totalFree + '%')
-    })
+export default async function () {
+  try {
+    const usage = await api.getUsage()
+    
+    const percentUsed = usage.percent_used || 0
+    const percentFree = 100 - percentUsed
+    
+    document.querySelector('.progress .usage').innerHTML = `${percentUsed}% used`
+    document.querySelector('.progress .free').innerHTML = `${percentFree}% free`
+    
+    document.querySelector('.progress').setAttribute(
+      'style', 
+      `grid-template-columns: ${percentUsed}% ${percentFree}%`
+    )
+  } catch (error) {
+    console.error('Failed to load usage:', error)
   }
-})
+}
