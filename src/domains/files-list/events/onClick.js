@@ -1,5 +1,6 @@
 import getData, { navigateBack } from './../data-manipulate/getData'
 import api from './../../../lib/api'
+import { deleteFileOptimistic, restoreFile } from './../../../lib/optimistic'
 
 export default function () {
   let onClick = async (e) => {
@@ -56,17 +57,30 @@ export default function () {
       return
     }
 
-    // Handle delete button
+    // Handle delete button - optimistic!
     if (element.classList.contains('file-delete')) {
       e.stopPropagation()
+      
       if (confirm('Are you sure you want to delete this file?')) {
+        const fileEl = element.closest('.file-item')
+        const fileId = fileEl.dataset.id
+        
+        // Store file data for restore if needed
+        const fileData = {
+          id: fileId,
+          name: fileEl.querySelector('.file-name').textContent,
+          is_folder: fileEl.dataset.type === 'folder'
+        }
+        
+        // Optimistic delete - remove immediately
+        deleteFileOptimistic(fileId)
+        
         try {
-          const fileId = element.closest('.file-item').dataset.id
           await api.deleteFile(fileId)
-          // Reload current folder
-          getData({ id: null, title: 'Home' })
         } catch (error) {
           console.error('Delete failed:', error)
+          // Restore file if delete failed
+          restoreFile(fileData)
           alert('Delete failed')
         }
       }
