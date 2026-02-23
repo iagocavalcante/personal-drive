@@ -141,6 +141,33 @@ class ApiClient {
       method: 'DELETE'
     })
   }
+
+  // Sharing
+  async shareFile(fileId, email) {
+    return this.request(`/files/${fileId}/share`, {
+      method: 'POST',
+      body: JSON.stringify({ email })
+    })
+  }
+
+  async getSharedWithMe() {
+    return this.request('/shared')
+  }
+
+  async getSharedByMe() {
+    return this.request('/shared/by-me')
+  }
+
+  async unshareFile(shareId) {
+    return this.request(`/shared/${shareId}`, {
+      method: 'DELETE'
+    })
+  }
+
+  // Usage
+  async getUsage() {
+    return this.request('/usage')
+  }
 }
 
 export const api = new ApiClient()

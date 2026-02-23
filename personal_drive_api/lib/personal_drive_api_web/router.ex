@@ -44,6 +44,15 @@ defmodule PersonalDriveApiWeb.Router do
     post "/files/confirm", FileController, :confirm_upload
     get "/files/:id/download", FileController, :download_url
     delete "/files/:id", FileController, :delete
+
+    # Sharing
+    post "/files/:file_id/share", ShareController, :share
+    get "/shared", ShareController, :shared_with_me
+    get "/shared/by-me", ShareController, :shared_by_me
+    delete "/shared/:id", ShareController, :unshare
+
+    # Usage
+    get "/usage", UsageController, :show
   end
 
   # Public API (registration, login, magic link)
