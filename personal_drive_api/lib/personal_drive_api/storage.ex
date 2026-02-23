@@ -9,45 +9,28 @@ defmodule PersonalDriveApi.Storage do
   alias PersonalDriveApi.Storage.Files
 
   @doc """
-  Returns the list of file.
-
-  ## Examples
-
-      iex> list_file()
-      [%Files{}, ...]
-
+  Returns the list of files for a user.
   """
-  def list_file do
-    Repo.all(Files)
+  def list_files(user_id) do
+    Repo.all(from f in Files, where: f.user_id == ^user_id)
   end
 
   @doc """
-  Returns root files (no parent).
+  Returns root files (no parent) for a user.
   """
-  def list_root_files do
-    Repo.all(from f in Files, where: is_nil(f.parent_id))
+  def list_root_files(user_id) do
+    Repo.all(from f in Files, where: f.user_id == ^user_id and is_nil(f.parent_id))
   end
 
   @doc """
-  Returns files by parent ID.
+  Returns files by parent ID for a user.
   """
-  def list_files_by_parent(parent_id) do
-    Repo.all(from f in Files, where: f.parent_id == ^parent_id)
+  def list_files_by_parent(parent_id, user_id) do
+    Repo.all(from f in Files, where: f.parent_id == ^parent_id and f.user_id == ^user_id)
   end
 
   @doc """
   Gets a single files.
-
-  Raises `Ecto.NoResultsError` if the Files does not exist.
-
-  ## Examples
-
-      iex> get_files!(123)
-      %Files{}
-
-      iex> get_files!(456)
-      ** (Ecto.NoResultsError)
-
   """
   def get_files!(id), do: Repo.get!(Files, id)
 
@@ -63,15 +46,6 @@ defmodule PersonalDriveApi.Storage do
 
   @doc """
   Creates a files.
-
-  ## Examples
-
-      iex> create_files(%{field: value})
-      {:ok, %Files{}}
-
-      iex> create_files(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
   """
   def create_files(attrs \\ %{}) do
     %Files{}
@@ -89,7 +63,7 @@ defmodule PersonalDriveApi.Storage do
   @doc """
   Creates a folder.
   """
-  def create_folder(name, parent_id \\ nil) do
+  def create_folder(name, user_id, parent_id \\ nil) do
     create_files(%{
       name: name,
       size: 0,
@@ -97,7 +71,8 @@ defmodule PersonalDriveApi.Storage do
       r2_key: nil,
       r2_etag: nil,
       is_folder: true,
-      parent_id: parent_id
+      parent_id: parent_id,
+      user_id: user_id
     })
   end
 
@@ -105,10 +80,8 @@ defmodule PersonalDriveApi.Storage do
   Deletes a folder and all its contents recursively.
   """
   def delete_folder_recursive(folder_id) do
-    # Get all children
-    children = list_files_by_parent(folder_id)
+    children = list_files_by_parent(folder_id, nil)
 
-    # Recursively delete each child
     Enum.each(children, fn child ->
       if child.is_folder do
         delete_folder_recursive(child.id)
@@ -117,22 +90,12 @@ defmodule PersonalDriveApi.Storage do
       end
     end)
 
-    # Delete the folder itself
     folder = get_file(folder_id)
     if folder, do: delete_files(folder)
   end
 
   @doc """
   Updates a files.
-
-  ## Examples
-
-      iex> update_files(files, %{field: new_value})
-      {:ok, %Files{}}
-
-      iex> update_files(files, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
   """
   def update_files(%Files{} = files, attrs) do
     files
@@ -142,15 +105,6 @@ defmodule PersonalDriveApi.Storage do
 
   @doc """
   Deletes a files.
-
-  ## Examples
-
-      iex> delete_files(files)
-      {:ok, %Files{}}
-
-      iex> delete_files(files)
-      {:error, %Ecto.Changeset{}}
-
   """
   def delete_files(%Files{} = files) do
     Repo.delete(files)
@@ -165,12 +119,6 @@ defmodule PersonalDriveApi.Storage do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking files changes.
-
-  ## Examples
-
-      iex> change_files(files)
-      %Ecto.Changeset{data: %Files{}}
-
   """
   def change_files(%Files{} = files, attrs \\ %{}) do
     Files.changeset(files, attrs)

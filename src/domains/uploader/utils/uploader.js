@@ -1,34 +1,18 @@
-import { app, database, auth, storage } from './../../../configuration/firebase'
-import getPath from './path'
-import { UserClass } from './../../auth/user/user'
+import api from './../../../lib/api'
+import { foldersPath } from './../../files-list/data-manipulate/getData'
 
-export default function (file, name) {
-    const path = getPath()
-    const storageRef = storage.ref()
-
-    const userInstance = new UserClass
-
-    const fileRef = storageRef.child('files/' + userInstance.user.uid + path + name)
-    fileRef.put(file).then((snapshot) => {
-      
-      const folderRef = database.ref('files/' + userInstance.user.uid + path)
-      storageRef.child('files/' + userInstance.user.uid + path + name).getDownloadURL()
-        .then( url => {
-          folderRef.push({
-            type: 'file',
-            title: name,
-            url: url,
-            size: snapshot.totalBytes
-          })
-        })
-
-      const totalBytes = snapshot.totalBytes
-
-      const userRef = database.ref('/users/' + userInstance.user.uid + '/usage')
-
-      userRef.once('value', (snapshot) => {
-        const size = snapshot.val() || 0
-        userRef.set(totalBytes + size)
-      }, err => console.log(err))
-    })
+export default async function uploadFile(file, name) {
+  // Get current folder ID (null for root)
+  const parentId = foldersPath.length > 0 ? foldersPath[foldersPath.length - 1].id : null
+  
+  try {
+    // Upload file via API
+    const response = await api.uploadFile(file, parentId)
+    
+    console.log('Upload successful:', response)
+    return response
+  } catch (error) {
+    console.error('Upload failed:', error)
+    throw error
+  }
 }

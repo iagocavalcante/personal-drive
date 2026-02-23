@@ -26,7 +26,6 @@ class ApiClient {
     const url = `${API_BASE_URL}${endpoint}`
     
     const headers = {
-      'Content-Type': 'application/json',
       ...options.headers
     }
 
@@ -37,57 +36,58 @@ class ApiClient {
 
     const response = await fetch(url, {
       ...options,
-      headers
+      headers,
+      credentials: 'include' // Important: include cookies for session auth
     })
 
-    if (!response.ok) {
-      if (response.status === 401) {
-        this.setToken(null)
-        window.dispatchEvent(new CustomEvent('auth:logout'))
-      }
-      throw new Error(`API Error: ${response.status}`)
+    // Handle empty responses
+    const text = await response.text()
+    if (!text) {
+      return {}
     }
 
-    return response.json()
+    try {
+      const data = JSON.parse(text)
+      
+      if (!response.ok) {
+        if (response.status === 401) {
+          this.setToken(null)
+          localStorage.removeItem('user')
+          window.dispatchEvent(new CustomEvent('auth:logout'))
+        }
+        throw new Error(data.error || `API Error: ${response.status}`)
+      }
+
+      return data
+    } catch (e) {
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`)
+      }
+      return {}
+    }
   }
 
   // Auth
   async register(email, password) {
-    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+    return this.request('/auth/register', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     })
-    
-    if (!response.ok) {
-      throw new Error('Registration failed')
-    }
-    
-    return response.json()
   }
 
   async login(email, password) {
-    const response = await fetch(`${API_BASE_URL}/auth/session`, {
+    return this.request('/auth/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
       body: JSON.stringify({ email, password })
     })
-    
-    if (!response.ok) {
-      throw new Error('Login failed')
-    }
-    
-    // Get token from cookie or response
-    const data = await response.json()
-    if (data.token) {
-      this.setToken(data.token)
-    }
-    
-    return data
   }
 
   async logout() {
+    try {
+      await this.request('/auth/logout', { method: 'POST' })
+    } catch (e) {
+      // Ignore errors
+    }
     this.setToken(null)
     localStorage.removeItem('user')
   }
@@ -117,11 +117,12 @@ class ApiClient {
     formData.append('file', file)
     if (parentId) formData.append('parent_id', parentId)
 
-    const token = this.getToken()
-    const response = await fetch(`${API_BASE_URL}/files/upload`, {
+    const url = `${API_BASE_URL}/files/upload`
+    
+    const response = await fetch(url, {
       method: 'POST',
-      headers: token ? { 'Authorization': `Bearer ${token}` } : {},
-      body: formData
+      body: formData,
+      credentials: 'include'
     })
 
     if (!response.ok) {
