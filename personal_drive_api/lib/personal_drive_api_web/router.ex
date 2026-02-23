@@ -46,12 +46,14 @@ defmodule PersonalDriveApiWeb.Router do
     delete "/files/:id", FileController, :delete
   end
 
-  # Public API (registration, magic link)
+  # Public API (registration, login, magic link)
   scope "/api/v1", PersonalDriveApiWeb do
     pipe_through :api
 
-    post "/auth/register", FileController, :index  # Placeholder
-    post "/auth/magic-link", FileController, :index  # Placeholder
+    post "/auth/register", AuthController, :register
+    post "/auth/login", AuthController, :login
+    post "/auth/logout", AuthController, :logout
+    get "/auth/me", AuthController, :me
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

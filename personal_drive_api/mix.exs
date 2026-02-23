@@ -63,7 +63,10 @@ defmodule PersonalDriveApi.MixProject do
       {:pow_assent, "~> 0.4"},
       
       # Email - Resend
-      {:resend, "~> 0.1"}
+      {:resend, "~> 0.1"},
+      
+      # CORS
+      {:cors_plug, "~> 3.0"}
     ]
   end
 
