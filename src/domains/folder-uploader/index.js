@@ -1,20 +1,21 @@
-import getPath from './../uploader/utils/path'
-import { database } from './../../configuration/firebase'
-import { UserClass } from './../auth/user/user'
+import api from './../../lib/api'
+import { foldersPath } from './../files-list/data-manipulate/getData'
 
-export default function () {
-  const dirName = prompt('Qual o nome do novo diretório', 'Minha pasta')
+export default async function () {
+  const dirName = prompt('Nome da 'Minha pasta nova pasta:',')
   if (dirName == null || dirName == '') {
     return
   }
 
-  const path = getPath()
+  // Get current folder ID (null for root)
+  const parentId = foldersPath.length > 0 ? foldersPath[foldersPath.length - 1].id : null
 
-  const userInstance = new UserClass
-
-  const folderRef = database.ref('files/' + userInstance.user.uid + path)
-  folderRef.push({
-    type: 'folder-open',
-    title:  dirName
-  })
+  try {
+    await api.createFolder(dirName, parentId)
+    // Reload current folder
+    window.location.reload()
+  } catch (error) {
+    console.error('Failed to create folder:', error)
+    alert('Failed to create folder')
+  }
 }
