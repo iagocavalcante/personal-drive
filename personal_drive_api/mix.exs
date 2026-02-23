@@ -60,7 +60,10 @@ defmodule PersonalDriveApi.MixProject do
       
       # Authentication - Magic Link
       {:pow, "~> 1.0"},
-      {:pow_assent, "~> 0.4"}
+      {:pow_assent, "~> 0.4"},
+      
+      # Email - Resend
+      {:resend, "~> 0.1"}
     ]
   end
 

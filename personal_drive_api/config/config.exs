@@ -31,6 +31,10 @@ config :personal_drive_api, PersonalDriveApiWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :personal_drive_api, PersonalDriveApi.Mailer, adapter: Swoosh.Adapters.Local
 
+# Resend configuration (for magic links)
+config :personal_drive_api, :resend,
+  api_key: System.get_env("RESEND_API_KEY")
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",

@@ -21,6 +21,10 @@ config :personal_drive_api, :r2,
   bucket: System.get_env("R2_BUCKET", "personal-drive"),
   public_url: System.get_env("R2_PUBLIC_URL")
 
+# Resend configuration for production
+config :personal_drive_api, :resend,
+  api_key: System.get_env("RESEND_API_KEY")
+
 # ## Using releases
 #
 # If you use `mix release`, you need to explicitly enable the server

@@ -91,3 +91,7 @@ config :ex_aws,
 config :personal_drive_api, :r2,
   bucket: System.get_env("R2_BUCKET", "personal-drive"),
   public_url: System.get_env("R2_PUBLIC_URL", "http://localhost:9000/personal-drive")
+
+# Resend Configuration (dev - uses test key or set RESEND_API_KEY)
+config :personal_drive_api, :resend,
+  api_key: System.get_env("RESEND_API_KEY", "re_test_123456789")
